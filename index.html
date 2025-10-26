@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emissor de Boletos Bancários</title>
+    <meta name="author" content="Onivaldo Miquelino">          
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style> 
+        body { font-family: ui-sans-serif, system-ui; }
+        .tab-button.active {
+            border-bottom: 3px solid #4f46e5; /* indigo-600 */
+            color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen p-6 flex justify-center">
+
+    <div class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-2xl mt-12">
+        <h1 class="text-3xl font-bold text-center text-indigo-700 mb-8">Emissor de Boletos</h1>
+        
+        <div class="flex border-b mb-6">
+            <button class="tab-button active px-4 py-2 font-semibold text-gray-600 hover:text-indigo-600 transition" data-tab="config">Configuração (Emitente)</button>
+            <button class="tab-button px-4 py-2 font-semibold text-gray-600 hover:text-indigo-600 transition" data-tab="emissao">Emissão (Sacado)</button>
+        </div>
+
+        <div id="feedback" class="mb-4 p-3 rounded-lg hidden text-sm font-medium"></div>
+
+        <div id="config-content" class="tab-content">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do Emitente e Banco</h2>
+            <form id="configForm" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nome/Razão Social (Cedente)</label>
+                        <input type="text" id="cedente_nome" name="cedente_nome" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">CPF/CNPJ</label>
+                        <input type="text" id="cedente_cpfcnpj" name="cedente_cpfcnpj" class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Banco</label>
+                        <select id="banco_id" name="banco_id" required class="w-full p-2 border rounded-md">
+                            </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Agência (Sem dígito)</label>
+                        <input type="text" id="agencia" name="agencia" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Conta (Sem dígito)</label>
+                        <input type="text" id="conta" name="conta" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Carteira</label>
+                        <input type="text" id="carteira" name="carteira" class="w-full p-2 border rounded-md">
+                    </div>
+                </div>
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md transition">
+                    Salvar Configuração
+                </button>
+            </form>
+        </div>
+
+        <div id="emissao-content" class="tab-content hidden">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do Boleto e Sacado</h2>
+            <form id="boletoForm" class="space-y-4 mb-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nome do Sacado</label>
+                        <input type="text" id="sacado_nome" name="sacado_nome" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Valor (R$)</label>
+                        <input type="number" step="0.01" id="valor" name="valor" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Vencimento</label>
+                        <input type="date" id="vencimento" name="vencimento" required class="w-full p-2 border rounded-md">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nosso Número (Sequencial)</label>
+                        <input type="text" id="nosso_numero" name="nosso_numero" class="w-full p-2 border rounded-md" value="1000000001">
+                    </div>
+                    </div>
+                <button type="submit" id="generateBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md transition">
+                    Emitir Boleto (HTML)
+                </button>
+            </form>
+
+            <div id="boletoResultArea" class="mt-8 border-t pt-6 hidden">
+                <h3 class="text-lg font-semibold mb-3">Resultado da Emissão:</h3>
+                <div id="boleto-html-container" class="border p-4 bg-gray-50 mb-4 overflow-auto max-h-96">
+                    </div>
+                <button id="generatePdfBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition">
+                    Gerar PDF do Boleto
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // O código JavaScript (app.js) fará a comunicação e a manipulação do DOM.
+        // O conteúdo de app.js está na próxima seção.
+    </script>
+</body>
+</html>
+    
